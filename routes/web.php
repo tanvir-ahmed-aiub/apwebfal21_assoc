@@ -17,7 +17,7 @@ use App\Http\Controllers\CustomerController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 //login
 Route::get('/login',[LoginController::class,'login'])->name('login');
@@ -33,3 +33,7 @@ Route::post('/checkout',[ProductController::class,'checkout'])->middleware('Logg
 Route::get('/customer/myorders',[CustomerController::class,'myorders'])
 ->middleware('LoggedInCustomer')->name('customer.myorders');
 Route::get('/logout',[LoginController::class,'logout'])->name('logout');
+Route::get('/customer/myorders/details/{id}',[CustomerController::class,'orderdetails'])->middleware('LoggedInCustomer')->name('customer.myorders.details');
+
+Route::get('/file',[LoginController::class,'test_file']);
+Route::post('/upload',[LoginController::class,'upload'])->name('upload');

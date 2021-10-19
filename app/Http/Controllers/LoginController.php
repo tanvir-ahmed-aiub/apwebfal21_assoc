@@ -26,4 +26,22 @@ class LoginController extends Controller
         session()->flush();
         return redirect()->route('login');
     }
+    public function test_file(){
+
+        return view('testfile');
+    }
+    public function upload(Request $request){
+        $request->validate(
+            [
+                'image'=> 'required|mimes:jpg,png,pdf,docx,xlsx,xlx|max:2048'
+            ]
+        );
+        if($request->hasFile('image')){
+            //return $request->file('image')->getClientOriginalName();
+            $name = time()."_".$request->file('image')->getClientOriginalName();
+            $request->file('image')->storeAs('uploads',$name,'public');
+            return "Upload successfull";
+        }
+        return "No file";
+    }
 }
