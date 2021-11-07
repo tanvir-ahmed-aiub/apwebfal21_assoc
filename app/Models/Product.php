@@ -9,6 +9,7 @@ use App\Models\orderdetial;
 class Product extends Model
 {
     use HasFactory;
+    public $timestamps   = false;
     public function orders(){
         $this->hasMany(Orderdetail::class,'o_id');
     }
