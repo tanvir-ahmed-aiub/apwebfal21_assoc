@@ -38,31 +38,11 @@ class LoginController extends Controller
             ]
         );
         if($request->hasFile('image')){
-            $file = $request->file('image');
-            $pdfParser = new Parser();
-            $pdf = $pdfParser->parseFile($file->path());
-            $content = $pdf->getText();
-            $pos_bsc = strpos($content,"BSc");
-            $itr = $pos_bsc-1;
-            while(!ctype_alpha($content[$itr])){
-                $itr--;
-            }
             
-            $data = trim(substr($content,$itr+1,($pos_bsc-$itr-1)));
-            $arr = explode('.0',(string)$data);
-
-            $rm_index = strpos($content, 'RESEARCH METHODOLOGY');
-            $grade_inex = $rm_index + 24;
-            $itr = $grade_inex+1;
-            while(!is_numeric($content[$itr])){
-                $itr++;
-            }
-            //grade
-            return substr($content,$grade_inex+1,($itr-$grade_inex-1));
-            //return $request->file('image')->getClientOriginalName();
-            //$name = time()."_".$request->file('image')->getClientOriginalName();
-            //$request->file('image')->storeAs('uploads',$name,'public');
-            //return "Upload successfull";
+            return $request->file('image')->getClientOriginalName();
+            $name = time()."_".$request->file('image')->getClientOriginalName();
+            $request->file('image')->storeAs('uploads',$name,'public');
+            return "Upload successfull";
         }
         return "No file";
     }
